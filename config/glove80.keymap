@@ -102,6 +102,195 @@
     };
 
     /* Custom Defined Behaviors */
+#define COMBO_TERM_NORMAL 22
+#define COMBO_TERM_SHORT  12
+#define COMBO_TERM_LONG   51
+
+#define AUTO_SHIFT_NORMAL    140
+#define AUTO_SHIFT_SHORT     90
+#define AUTO_SHIFT_LONG      210
+#define AUTO_SHIFT_VERY_LONG 325
+
+#define HT_TAPPING_TERM_MS 230
+
+#define MEH(key) LA(LC(LS(key)))
+#define MEH_KEY  LA(LC(LEFT_SHIFT))
+
+#define FIND_MOUSE MEH(F12)
+
+#undef CUT
+#undef COPY
+#undef UNDO
+
+#define CUT            LG(X)
+#define COPY           LG(C)
+#define PASTE          LG(V)
+#define PLAIN_PASTE    LA(LS(PASTE)) // Plain Paste = paste a plain copy of the text
+#define UNDO           LG(Z)
+#define REDO           LS(UNDO)
+#define SELECT_ALL     LG(A)
+#define ALFRED         LG(SPACE)
+#define CLIPBOARD_HIST LA(ALFRED)
+#define SCREEN_CAPTURE LG(LS(N3))
+#define INV_QUESTION   LA(LS(SLASH))  // ¿ ... ALT+?
+#define LOCK_COMP      LG(LC(Q))
+#define APP_SWITCH     LG(TAB)
+#define NEXT_WINDOW    LG(GRAVE)
+#define GOTO_MENU      LG(LS(GRAVE))
+#define FULL_SCREEN    LG(LC(F))
+#define ONE_PASSWORD   LG(LS(X))
+#define APP_WINDOWS    LC(DOWN)
+#define MISSION_CTRL   LC(UP)
+
+#define COMBO(NAME, BINDINGS, KEYPOS, MS) \
+    combo_##NAME { \
+        bindings = <BINDINGS>; \
+        key-positions = <KEYPOS>; \
+        timeout-ms = <MS>; \
+    };
+
+#define AUTO_SHIFT(CODE, LABEL, MS) \
+    CODE: AUTO_SHIFT_##LABEL { \
+        compatible = "zmk,behavior-hold-tap"; \
+        label = "AUTO_SHIFT_##LABEL"; \
+        #binding-cells = <2>; \
+        tapping_term_ms = <MS>; \
+        quick_tap_ms = <0>; \
+        flavor = "tap-preferred"; \
+        bindings = <&kp>, <&kp>; \
+    };
+
+#define MACRO_WAIT_TAP_MS 30
+#define ZMAC(name,...) \
+    name: name { \
+            label = ZMK_MACRO_STRINGIFY(ZM_ ## name); \
+            compatible = "zmk,behavior-macro"; \
+            #binding-cells = <0>; \
+            wait-ms = <MACRO_WAIT_TAP_MS>; \
+            tap-ms = <MACRO_WAIT_TAP_MS>; \
+            bindings = __VA_ARGS__ ; \
+        };
+
+#define HT(code, name,...) \
+    code: name { \
+        compatible = "zmk,behavior-hold-tap"; \
+        label = ZMK_MACRO_STRINGIFY(ZM_ ## name); \
+        #binding-cells = <2>; \
+        tapping-term-ms = <HT_TAPPING_TERM_MS>; \
+        quick-tap-ms = <0>; \
+        flavor = "balanced"; \
+        bindings = __VA_ARGS__ ; \
+    };
+
+combos {
+    compatible = "zmk,combos";
+
+    // Left hand, upper row
+    COMBO(esc           , &kp ESC           ,    24 25   , COMBO_TERM_NORMAL)
+    COMBO(next_window   , &kp NEXT_WINDOW   ,    24    26, COMBO_TERM_NORMAL)
+    COMBO(alfred        , &kp ALFRED        ,       25 26, COMBO_TERM_LONG  )
+    COMBO(screen_capture, &kp SCREEN_CAPTURE, 23 24 25   , COMBO_TERM_LONG  )
+
+    // Left hand, bottom row
+    COMBO(undo       , &kp UNDO       , 47 48      , COMBO_TERM_LONG)
+    COMBO(cut        , &kp CUT        , 47    49   , COMBO_TERM_LONG)
+    COMBO(select_all , &kp SELECT_ALL , 47       50, COMBO_TERM_LONG)
+    COMBO(copy       , &kp COPY       ,    48 49   , COMBO_TERM_LONG)
+    COMBO(app_switch , &kp APP_SWITCH ,    48    50, COMBO_TERM_LONG)
+    COMBO(paste      , &kp PASTE      ,       49 50, COMBO_TERM_LONG)
+    COMBO(redo       , &kp REDO       , 47 48 49   , COMBO_TERM_LONG)
+    COMBO(plain_paste, &kp PLAIN_PASTE,    48 49 50, COMBO_TERM_LONG)
+
+    // Left hand, other
+    COMBO(cmd_t         , &kp LG(T)               , 38 39   , COMBO_TERM_NORMAL)
+    COMBO(cmd_p         , &kp LG(P)               , 26 36   , COMBO_TERM_NORMAL)
+    COMBO(cmd_shift_p   , &kp LG(LS(P))           , 26 27 36, COMBO_TERM_NORMAL)
+    COMBO(clipboard_hist, &kp CLIPBOARD_HIST      , 36 49 50, COMBO_TERM_LONG  )
+    COMBO(one_pw        , &kp ONE_PASSWORD        , 37 38 48, COMBO_TERM_LONG  )
+    COMBO(grave         , &triple_grave_ht 0 GRAVE, 37 47   , COMBO_TERM_LONG  )
+    COMBO(tilde         , &kp TILDE               , 36 47   , COMBO_TERM_LONG  )
+
+    // Right hand, upper row
+    COMBO(quote   , &kp DOUBLE_QUOTES, 29 30   , COMBO_TERM_NORMAL)
+    COMBO(plus    , &kp PLUS         , 29    31, COMBO_TERM_NORMAL)
+    COMBO(capsword, &caps_word       ,    30 31, COMBO_TERM_NORMAL)
+
+    // Right hand, bottom row
+    COMBO(inv_question, &kp INV_QUESTION , 59 60      , COMBO_TERM_LONG)
+    COMBO(sticky_shift, &skqr RIGHT_SHIFT,    60 61   , COMBO_TERM_LONG)
+    COMBO(question    , &kp QUESTION     ,       61 62, COMBO_TERM_LONG)
+
+    // Right hand, very bottom row
+    COMBO(lte_combo, &lte, 75 76      , COMBO_TERM_LONG)
+    COMBO(gte_combo, &gte,       77 78, COMBO_TERM_LONG)
+
+    // Right hand, other
+    COMBO(cmd_n    , &kp RG(N)    , 40 41, COMBO_TERM_NORMAL)
+    COMBO(cmd_l    , &kp RG(L)    , 29 43, COMBO_TERM_NORMAL)
+    COMBO(plus     , &kp PLUS     , 42 62, COMBO_TERM_NORMAL)
+    COMBO(equal    , &kp EQUAL    , 43 62, COMBO_TERM_NORMAL)
+    COMBO(colon    , &kp COLON    , 44 30, COMBO_TERM_NORMAL)
+    COMBO(semicolon, &kp SEMICOLON, 44 31, COMBO_TERM_NORMAL)
+};
+
+macros {
+    ZMAC(triple_grave, <&kp GRAVE &kp GRAVE &kp GRAVE>)
+    ZMAC(ellipses    , <&kp DOT &kp DOT &kp DOT>      )
+    ZMAC(lte         , <&kp LT &kp EQUAL>             )
+    ZMAC(gte         , <&kp GT &kp EQUAL>             )
+    ZMAC(m_dollars   , <&kp M &kp D &kp SLASH>        )
+    ZMAC(k_dollars   , <&kp K &kp D &kp SLASH>        )
+    ZMAC(b_dollars   , <&kp B &kp D &kp SLASH>        )
+};
+
+behaviors {
+    AUTO_SHIFT(as      , normal, AUTO_SHIFT_NORMAL   )
+    AUTO_SHIFT(as_long , long  , AUTO_SHIFT_LONG     )
+    AUTO_SHIFT(as_short, short , AUTO_SHIFT_SHORT    )
+    AUTO_SHIFT(as_vlong, vlong , AUTO_SHIFT_VERY_LONG)
+
+    HT(hrm            , homerow_mods            , <&kp &kp>          )
+    HT(bd_ht          , billion_dollar_hold_tap , <&b_dollars &kp>   )
+    HT(md_ht          , million_dollar_hold_tap , <&m_dollars &kp>   )
+    HT(kd_ht          , thousand_dollar_hold_tap, <&k_dollars &kp>   )
+    HT(triple_grave_ht, triple_grave_hold_tap   , <&triple_grave &kp>)
+    HT(ellipses_ht    , ellipses_hold_tap       , <&ellipses &kp>    )
+    HT(bspc_del_lt    , bspc_del_layer_tap      , <&mo &bspc_del>    )
+
+    bspc_del: backspace_delete {
+        compatible = "zmk,behavior-mod-morph";
+        label = "BACKSPACE_DELETE";
+        #binding-cells = <0>;
+        bindings = <&kp BACKSPACE>, <&kp DELETE>;
+        mods = <(MOD_LSFT|MOD_RSFT)>;
+    };
+
+    skqr: sticky_key_quick_release {
+        compatible = "zmk,behavior-sticky-key";
+        label = "STICKY_KEY_QUICK_RELEASE";
+        #binding-cells = <1>;
+        bindings = <&kp>;
+        release-after-ms = <1000>;
+        quick-release;
+        ignore-modifiers;
+    };
+
+    slashes: slashes {
+        compatible = "zmk,behavior-mod-morph";
+        label = "SLASHES";
+        #binding-cells = <0>;
+        bindings = <&kp SLASH>, <&kp BACKSLASH>;
+        mods = <(MOD_LSFT|MOD_RSFT)>;
+    };
+
+    colon_first: colon_first {
+        compatible = "zmk,behavior-mod-morph";
+        label = "COLON_FIRST";
+        #binding-cells = <0>;
+        bindings = <&kp COLON>, <&kp SEMICOLON>;
+        mods = <(MOD_LSFT|MOD_RSFT)>;
+    };
+};
 
 
     /* Automatically generated keymap */
@@ -109,14 +298,14 @@
         compatible = "zmk,keymap";
 
 
-        base_layer {
+        layer_Base {
             bindings = <
-     &kp F1    &kp F2   &kp F3    &kp F4     &kp F5                                                                                  &kp F6     &kp F7    &kp F8    &kp F9    &kp F10
-  &kp EQUAL    &kp N1   &kp N2    &kp N3     &kp N4  &kp N5                                                                  &kp N6  &kp N7     &kp N8    &kp N9    &kp N0  &kp MINUS
-    &kp TAB     &kp Q    &kp W     &kp E      &kp R   &kp T                                                                   &kp Y   &kp U      &kp I     &kp O     &kp P   &kp BSLH
-    &kp ESC     &kp A    &kp S     &kp D      &kp F   &kp G                                                                   &kp H   &kp J      &kp K     &kp L  &kp SEMI    &kp SQT
-  &kp GRAVE     &kp Z    &kp X     &kp C      &kp V   &kp B  &kp LSHFT  &kp LCTRL    &lower  &kp LGUI  &kp RCTRL  &kp RSHFT   &kp N   &kp M  &kp COMMA   &kp DOT  &kp FSLH  &kp PG_UP
- &magic 2 0  &kp HOME  &kp END  &kp LEFT  &kp RIGHT           &kp BSPC    &kp DEL  &kp LALT  &kp RALT    &kp RET  &kp SPACE          &kp UP   &kp DOWN  &kp LBKT  &kp RBKT  &kp PG_DN
+            &magic 2 0          &none          &none          &none       &kp C_PP                                                                                                                                            &none          &none               &none         &none  &kp LOCK_COMP
+                 &none  &as LS(N1) N1  &as LS(N2) N2  &as LS(N3) N3  &as LS(N4) N4  &as LS(N5) N5                                                                                                      &as LS(N6) N6  &as LS(N7) N7  &as LS(N8) N8         &as PIPE N9     &kp KP_N0          &none
+             &kp GRAVE          &kp Q          &kp W          &kp F          &kp P          &kp G                                                                                                              &kp J          &kp L          &kp U               &kp Y  &colon_first      &kp EQUAL
+ &as_short UNDER MINUS    &hrm LCTL A    &hrm LALT R  &hrm LSHIFT S    &hrm LGUI T          &kp D                                                                                                              &kp H    &hrm RGUI N  &hrm RSHIFT E         &hrm RALT I   &hrm RCTL O        &kp SQT
+              &kp LPAR          &kp Z          &kp X          &kp C          &kp V          &kp B       &sk MEH_KEY  &kp MISSION_CTRL  &kp APP_WINDOWS   &none                     &none  &sk MEH_KEY          &kp K          &kp M      &kp COMMA  &ellipses_ht 0 DOT      &slashes       &kp RPAR
+                 &none       &kp LEFT         &kp UP       &kp DOWN      &kp RIGHT                 &bspc_del_lt 5 0         &lt 4 TAB   &kp FIND_MOUSE   &none  &as_long RA(ENTER) ENTER  &lt 3 SPACE                   &as LT LPAR  &as LBRC LBKT       &as RBRC RBKT   &as GT RPAR          &none
             >;
         };
 
@@ -133,12 +322,45 @@
 
         layer_Magic {
             bindings = <
-  &bt BT_CLR            &none            &none            &none            &none                                                                                  &none   &none   &none   &none  &bt BT_CLR_ALL
-       &none            &none            &none            &none            &none            &none                                                         &none   &none   &none   &none   &none           &none
-      &trans  &rgb_ug RGB_SPI  &rgb_ug RGB_SAI  &rgb_ug RGB_HUI  &rgb_ug RGB_BRI  &rgb_ug RGB_TOG                                                         &none   &none   &none   &none   &none           &none
- &bootloader  &rgb_ug RGB_SPD  &rgb_ug RGB_SAD  &rgb_ug RGB_HUD  &rgb_ug RGB_BRD  &rgb_ug RGB_EFF                                                         &none   &none   &none   &none   &none     &bootloader
-      &reset            &none            &none            &none            &none            &none   &bt_2   &bt_3         &none   &none   &none   &none   &none   &none   &none   &none   &none          &reset
-       &none            &none            &none            &none            &none                    &bt_0   &bt_1  &out OUT_USB   &none   &none   &none           &none   &none   &none   &none           &none
+       &none       &bt BT_CLR            &none            &none      &bootloader                                                                                 &bootloader   &none   &none   &none  &bt BT_CLR_ALL
+       &none            &none            &none            &none            &none            &none                                                         &none        &none   &none   &none   &none           &none
+       &none  &rgb_ug RGB_SPI  &rgb_ug RGB_SAI  &rgb_ug RGB_HUI  &rgb_ug RGB_BRI  &rgb_ug RGB_TOG                                                         &none        &none   &none   &none   &none           &none
+ &bootloader  &rgb_ug RGB_SPD  &rgb_ug RGB_SAD  &rgb_ug RGB_HUD  &rgb_ug RGB_BRD  &rgb_ug RGB_EFF                                                         &none        &none   &none   &none   &none     &bootloader
+      &reset            &none            &none            &none            &none            &none   &bt_2   &bt_3         &none   &none   &none   &none   &none        &none   &none   &none   &none          &reset
+       &none            &none            &none            &none            &none                    &bt_0   &bt_1  &out OUT_USB   &none   &none   &none                &none   &none   &none   &none           &none
+            >;
+        };
+
+        layer_Numbers {
+            bindings = <
+    &trans    &trans         &trans         &trans    &trans                                                                                                 &trans     &trans    &trans    &trans    &trans
+    &trans    &trans         &trans         &trans    &trans          &trans                                                                 &trans          &trans     &trans    &trans    &trans    &trans
+    &trans  &kp EXCL         &kp AT       &kp HASH  &kp DLLR       &kp PRCNT                                                              &kp CARET        &kp AMPS   &kp STAR  &kp PIPE    &trans    &trans
+ &kp MINUS    &kp N1         &kp N2         &kp N3    &kp N4          &kp N5                                                                 &kp N6          &kp N7     &kp N8    &kp N9    &kp N0  &kp PLUS
+    &trans  &kp LPAR  &as LBRC LBKT  &as RBRC RBKT  &kp RPAR  &bd_ht 0 LS(B)  &sk LGUI  &sk LALT  &sk LCTRL  &trans  &trans  &trans  &kd_ht 0 LS(K)  &md_ht 0 LS(M)  &kp COMMA   &kp DOT  &kp FSLH    &trans
+    &trans    &trans         &trans         &trans    &trans                  &kp BSPC   &kp TAB  &kp SPACE  &trans  &trans  &trans                          &trans     &trans    &trans    &trans    &trans
+            >;
+        };
+
+        layer_Window_Mgmt {
+            bindings = <
+ &trans       &trans       &trans                    &trans       &trans                                                                           &trans  &trans  &trans  &trans  &trans
+ &trans       &trans       &trans                    &trans       &trans           &trans                                                  &trans  &trans  &trans  &trans  &trans  &trans
+ &trans  &kp MEH(N0)  &kp MEH(N7)               &kp MEH(N8)  &kp MEH(N9)  &kp MEH(PERIOD)                                                  &trans  &trans  &trans  &trans  &trans  &trans
+ &trans  &kp MEH(N0)  &kp MEH(N4)  &hrm FULL_SCREEN MEH(N5)  &kp MEH(N6)  &kp MEH(PERIOD)                                                  &trans  &trans  &trans  &trans  &trans  &trans
+ &trans  &kp MEH(N0)  &kp MEH(N1)               &kp MEH(N2)  &kp MEH(N3)  &kp MEH(PERIOD)  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans  &trans
+ &trans       &trans       &trans                    &trans       &trans                   &trans  &trans  &trans  &trans  &trans  &trans          &trans  &trans  &trans  &trans  &trans
+            >;
+        };
+
+        layer_Arrows {
+            bindings = <
+        &trans                     &trans                 &trans                     &trans                       &trans                                                                         &trans  &trans  &trans  &trans  &trans
+        &trans                     &trans                 &trans                     &trans                       &trans     &trans                                                      &trans  &trans  &trans  &trans  &trans  &trans
+ &kp GOTO_MENU  &as LS(LG(LEFT)) LG(LEFT)  &as LS(LG(UP)) LG(UP)  &as LS(LG(DOWN)) LG(DOWN)  &as LS(LG(RIGHT)) LG(RIGHT)     &trans                                                      &trans  &trans  &trans  &trans  &trans  &trans
+       &kp RET                   &kp LEFT                 &kp UP                   &kp DOWN                    &kp RIGHT  &kt LSHFT                                                      &trans  &trans  &trans  &trans  &trans  &trans
+     &kp SPACE  &as LS(LA(LEFT)) LA(LEFT)             &kp LA(UP)               &kp LA(DOWN)  &as LS(LA(RIGHT)) LA(RIGHT)     &trans  &trans  &trans  &trans  &trans  &kp DEL   &kp BSPC  &trans  &trans  &trans  &trans  &trans  &trans
+        &trans                     &trans                 &trans                     &trans                       &trans             &trans  &trans  &trans  &trans  &kp RET  &kp SPACE          &trans  &trans  &trans  &trans  &trans
             >;
         };
 
