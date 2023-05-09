@@ -106,10 +106,9 @@
 #define COMBO_TERM_SHORT  12
 #define COMBO_TERM_LONG   51
 
-#define AUTO_SHIFT_NORMAL    140
-#define AUTO_SHIFT_SHORT     90
-#define AUTO_SHIFT_LONG      210
-#define AUTO_SHIFT_VERY_LONG 325
+#define AUTO_SHIFT_NORMAL    130
+#define AUTO_SHIFT_SHORT     80
+#define AUTO_SHIFT_LONG      195
 
 #define HT_TAPPING_TERM_MS 230
 
@@ -216,21 +215,22 @@ combos {
     COMBO(capsword, &caps_word       ,    30 31, COMBO_TERM_NORMAL)
 
     // Right hand, bottom row
-    COMBO(inv_question, &kp INV_QUESTION , 59 60      , COMBO_TERM_LONG)
-    COMBO(sticky_shift, &skqr RIGHT_SHIFT,    60 61   , COMBO_TERM_LONG)
-    COMBO(question    , &kp QUESTION     ,       61 62, COMBO_TERM_LONG)
+    COMBO(inv_question, &kp INV_QUESTION , 59 60      , COMBO_TERM_LONG  )
+    COMBO(sticky_shift, &skqr RIGHT_SHIFT,    60 61   , COMBO_TERM_LONG  )
+    COMBO(question    , &kp QUESTION     ,       61 62, COMBO_TERM_LONG  )
+    COMBO(colon       , &kp COLON        , 59    61   , COMBO_TERM_NORMAL)
+    COMBO(left_brace  , &kp LBRC         , 59 60 61   , COMBO_TERM_LONG  )
+    COMBO(right_brace , &kp RBRC         ,    60 61 62, COMBO_TERM_LONG  )
 
     // Right hand, very bottom row
     COMBO(lte_combo, &lte, 75 76      , COMBO_TERM_LONG)
     COMBO(gte_combo, &gte,       77 78, COMBO_TERM_LONG)
 
     // Right hand, other
-    COMBO(cmd_n    , &kp RG(N)    , 40 41, COMBO_TERM_NORMAL)
-    COMBO(cmd_l    , &kp RG(L)    , 29 43, COMBO_TERM_NORMAL)
-    COMBO(plus     , &kp PLUS     , 42 62, COMBO_TERM_NORMAL)
-    COMBO(equal    , &kp EQUAL    , 43 62, COMBO_TERM_NORMAL)
-    COMBO(colon    , &kp COLON    , 44 30, COMBO_TERM_NORMAL)
-    COMBO(semicolon, &kp SEMICOLON, 44 31, COMBO_TERM_NORMAL)
+    COMBO(cmd_n    , &kp RG(N)    ,          40 41            , COMBO_TERM_NORMAL)
+    COMBO(cmd_l    , &kp RG(L)    , 29                43      , COMBO_TERM_NORMAL)
+    COMBO(equal    , &kp EQUAL    ,    30                44   , COMBO_TERM_NORMAL)
+    COMBO(semicolon, &kp SEMICOLON,                42       62, COMBO_TERM_NORMAL)
 };
 
 macros {
@@ -247,7 +247,6 @@ behaviors {
     AUTO_SHIFT(as      , normal, AUTO_SHIFT_NORMAL   )
     AUTO_SHIFT(as_long , long  , AUTO_SHIFT_LONG     )
     AUTO_SHIFT(as_short, short , AUTO_SHIFT_SHORT    )
-    AUTO_SHIFT(as_vlong, vlong , AUTO_SHIFT_VERY_LONG)
 
     HT(hrm            , homerow_mods            , <&kp &kp>          )
     HT(bd_ht          , billion_dollar_hold_tap , <&b_dollars &kp>   )
@@ -304,7 +303,7 @@ behaviors {
                  &none  &as LS(N1) N1  &as LS(N2) N2  &as LS(N3) N3  &as LS(N4) N4  &as LS(N5) N5                                                                                                      &as LS(N6) N6  &as LS(N7) N7  &as LS(N8) N8         &as PIPE N9     &kp KP_N0          &none
              &kp GRAVE          &kp Q          &kp W          &kp F          &kp P          &kp G                                                                                                              &kp J          &kp L          &kp U               &kp Y  &colon_first      &kp EQUAL
  &as_short UNDER MINUS    &hrm LCTL A    &hrm LALT R  &hrm LSHIFT S    &hrm LGUI T          &kp D                                                                                                              &kp H    &hrm RGUI N  &hrm RSHIFT E         &hrm RALT I   &hrm RCTL O        &kp SQT
-              &kp LPAR          &kp Z          &kp X          &kp C          &kp V          &kp B       &sk MEH_KEY  &kp MISSION_CTRL  &kp APP_WINDOWS   &none                     &none  &sk MEH_KEY          &kp K          &kp M      &kp COMMA  &ellipses_ht 0 DOT      &slashes       &kp RPAR
+                 &none          &kp Z          &kp X          &kp C          &kp V          &kp B       &sk MEH_KEY  &kp MISSION_CTRL  &kp APP_WINDOWS   &none                     &none  &sk MEH_KEY          &kp K          &kp M      &kp COMMA  &ellipses_ht 0 DOT      &slashes          &none
                  &none       &kp LEFT         &kp UP       &kp DOWN      &kp RIGHT                 &bspc_del_lt 5 0         &lt 4 TAB   &kp FIND_MOUSE   &none  &as_long RA(ENTER) ENTER  &lt 3 SPACE                   &as LT LPAR  &as LBRC LBKT       &as RBRC RBKT   &as GT RPAR          &none
             >;
         };
