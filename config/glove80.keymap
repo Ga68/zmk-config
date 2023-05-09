@@ -332,12 +332,12 @@ behaviors {
 
         layer_Numbers {
             bindings = <
-    &trans    &trans         &trans         &trans    &trans                                                                                                 &trans     &trans    &trans    &trans    &trans
-    &trans    &trans         &trans         &trans    &trans          &trans                                                                 &trans          &trans     &trans    &trans    &trans    &trans
-    &trans  &kp EXCL         &kp AT       &kp HASH  &kp DLLR       &kp PRCNT                                                              &kp CARET        &kp AMPS   &kp STAR  &kp PIPE    &trans    &trans
- &kp MINUS    &kp N1         &kp N2         &kp N3    &kp N4          &kp N5                                                                 &kp N6          &kp N7     &kp N8    &kp N9    &kp N0  &kp PLUS
-    &trans  &kp LPAR  &as LBRC LBKT  &as RBRC RBKT  &kp RPAR  &bd_ht 0 LS(B)  &sk LGUI  &sk LALT  &sk LCTRL  &trans  &trans  &trans  &kd_ht 0 LS(K)  &md_ht 0 LS(M)  &kp COMMA   &kp DOT  &kp FSLH    &trans
-    &trans    &trans         &trans         &trans    &trans                  &kp BSPC   &kp TAB  &kp SPACE  &trans  &trans  &trans                          &trans     &trans    &trans    &trans    &trans
+    &trans    &trans         &trans         &trans    &trans                                                                                                 &trans     &trans    &trans     &trans    &trans
+    &trans    &trans         &trans         &trans    &trans          &trans                                                                 &trans          &trans     &trans    &trans     &trans    &trans
+    &trans  &kp EXCL         &kp AT       &kp HASH  &kp DLLR       &kp PRCNT                                                              &kp CARET        &kp AMPS   &kp STAR  &kp PIPE  &kp EQUAL    &trans
+ &kp MINUS    &kp N1         &kp N2         &kp N3    &kp N4          &kp N5                                                                 &kp N6          &kp N7     &kp N8    &kp N9     &kp N0  &kp PLUS
+    &trans  &kp LPAR  &as LBRC LBKT  &as RBRC RBKT  &kp RPAR  &bd_ht 0 LS(B)  &sk LGUI  &sk LALT  &sk LCTRL  &trans  &trans  &trans  &kd_ht 0 LS(K)  &md_ht 0 LS(M)  &kp COMMA   &kp DOT   &kp FSLH    &trans
+    &trans    &trans         &trans         &trans    &trans                  &kp BSPC   &kp TAB  &kp SPACE  &trans  &trans  &trans                          &trans     &trans    &trans     &trans    &trans
             >;
         };
 
