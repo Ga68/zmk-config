@@ -102,7 +102,7 @@
     };
 
     /* Custom Defined Behaviors */
-#define COMBO_TERM_NORMAL 22
+#define COMBO_TERM_NORMAL 24
 #define COMBO_TERM_SHORT  12
 #define COMBO_TERM_LONG   51
 
