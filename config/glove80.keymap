@@ -106,9 +106,9 @@
 #define COMBO_TERM_SHORT  12
 #define COMBO_TERM_LONG   51
 
-#define AUTO_SHIFT_NORMAL    130
-#define AUTO_SHIFT_SHORT     80
-#define AUTO_SHIFT_LONG      195
+#define AUTO_SHIFT_NORMAL    150
+#define AUTO_SHIFT_SHORT     100
+#define AUTO_SHIFT_LONG      200
 
 #define HT_TAPPING_TERM_MS 230
 
