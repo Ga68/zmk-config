@@ -122,12 +122,12 @@
 #define CUT            LG(X)
 #define COPY           LG(C)
 #define PASTE          LG(V)
-#define PLAIN_PASTE    LA(LS(PASTE)) // Plain Paste = paste a plain copy of the text
+#define PLAIN_PASTE    LA(LS(LG(V))) // Plain Paste = paste a plain copy of the text
 #define UNDO           LG(Z)
-#define REDO           LS(UNDO)
+#define REDO           LS(LG(Z))
 #define SELECT_ALL     LG(A)
 #define ALFRED         LG(SPACE)
-#define CLIPBOARD_HIST LA(ALFRED)
+#define CLIPBOARD_HIST LA(LG(SPACE))
 #define SCREEN_CAPTURE LG(LS(N3))
 #define INV_QUESTION   LA(LS(SLASH))  // ¿ ... ALT+?
 #define LOCK_COMP      LG(LC(Q))
@@ -178,15 +178,15 @@ combos {
     COMBO(screen_capture, &kp SCREEN_CAPTURE, 23 24 25   , COMBO_TERM_LONG  )
 
     // Left hand, bottom row
-    COMBO(redo       , &kp REDO       , 47 48 49   , COMBO_TERM_LONG)
-    COMBO(plain_paste, &kp PLAIN_PASTE,    48 49 50, COMBO_TERM_LONG)
     COMBO(undo       , &kp UNDO       , 47 48      , COMBO_TERM_LONG)
     COMBO(cut        , &kp CUT        , 47    49   , COMBO_TERM_LONG)
     COMBO(select_all , &kp SELECT_ALL , 47       50, COMBO_TERM_LONG)
     COMBO(copy       , &kp COPY       ,    48 49   , COMBO_TERM_LONG)
     COMBO(app_switch , &kp APP_SWITCH ,    48    50, COMBO_TERM_LONG)
     COMBO(paste      , &kp PASTE      ,       49 50, COMBO_TERM_LONG)
-
+    COMBO(redo       , &kp REDO       , 47 48 49   , COMBO_TERM_LONG)
+    COMBO(plain_paste, &kp PLAIN_PASTE,    48 49 50, COMBO_TERM_LONG)
+    
     // Left hand, other
     COMBO(cmd_t         , &kp LG(T)               ,             38 39            , COMBO_TERM_NORMAL)
     COMBO(cmd_p         , &kp LG(P)               , 26    36                     , COMBO_TERM_NORMAL)
