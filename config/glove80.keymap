@@ -178,23 +178,23 @@ combos {
     COMBO(screen_capture, &kp SCREEN_CAPTURE, 23 24 25   , COMBO_TERM_LONG  )
 
     // Left hand, bottom row
+    COMBO(redo       , &kp REDO       , 47 48 49   , COMBO_TERM_LONG)
+    COMBO(plain_paste, &kp PLAIN_PASTE,    48 49 50, COMBO_TERM_LONG)
     COMBO(undo       , &kp UNDO       , 47 48      , COMBO_TERM_LONG)
     COMBO(cut        , &kp CUT        , 47    49   , COMBO_TERM_LONG)
     COMBO(select_all , &kp SELECT_ALL , 47       50, COMBO_TERM_LONG)
     COMBO(copy       , &kp COPY       ,    48 49   , COMBO_TERM_LONG)
     COMBO(app_switch , &kp APP_SWITCH ,    48    50, COMBO_TERM_LONG)
     COMBO(paste      , &kp PASTE      ,       49 50, COMBO_TERM_LONG)
-    COMBO(redo       , &kp REDO       , 47 48 49   , COMBO_TERM_LONG)
-    COMBO(plain_paste, &kp PLAIN_PASTE,    48 49 50, COMBO_TERM_LONG)
 
     // Left hand, other
-    COMBO(cmd_t         , &kp LG(T)               , 38 39   , COMBO_TERM_NORMAL)
-    COMBO(cmd_p         , &kp LG(P)               , 26 36   , COMBO_TERM_NORMAL)
-    COMBO(cmd_shift_p   , &kp LG(LS(P))           , 26 27 36, COMBO_TERM_NORMAL)
-    COMBO(clipboard_hist, &kp CLIPBOARD_HIST      , 36 49 50, COMBO_TERM_LONG  )
-    COMBO(one_pw        , &kp ONE_PASSWORD        , 37 38 48, COMBO_TERM_LONG  )
-    COMBO(grave         , &triple_grave_ht 0 GRAVE, 37 47   , COMBO_TERM_LONG  )
-    COMBO(tilde         , &kp TILDE               , 36 47   , COMBO_TERM_LONG  )
+    COMBO(cmd_t         , &kp LG(T)               ,             38 39            , COMBO_TERM_NORMAL)
+    COMBO(cmd_p         , &kp LG(P)               , 26    36                     , COMBO_TERM_NORMAL)
+    COMBO(cmd_shift_p   , &kp LG(LS(P))           , 26 27 36                     , COMBO_TERM_NORMAL)
+    COMBO(clipboard_hist, &kp CLIPBOARD_HIST      ,       36                49 50, COMBO_TERM_LONG  )
+    COMBO(one_pw        , &kp ONE_PASSWORD        ,          37 38       48      , COMBO_TERM_LONG  )
+    COMBO(grave         , &triple_grave_ht 0 GRAVE,          37       47         , COMBO_TERM_LONG  )
+    COMBO(tilde         , &kp TILDE               ,       36          47         , COMBO_TERM_LONG  )
 
     // Right hand, upper row
     COMBO(quote   , &kp DOUBLE_QUOTES, 29 30   , COMBO_TERM_NORMAL)
@@ -214,10 +214,10 @@ combos {
     COMBO(gte_combo, &gte,       77 78, COMBO_TERM_LONG)
 
     // Right hand, other
-    COMBO(cmd_n    , &kp RG(N)    ,          40 41            , COMBO_TERM_NORMAL)
-    COMBO(cmd_l    , &kp RG(L)    , 29                43      , COMBO_TERM_NORMAL)
-    COMBO(equal    , &kp EQUAL    ,    30                44   , COMBO_TERM_NORMAL)
-    COMBO(semicolon, &kp SEMICOLON,                42       62, COMBO_TERM_NORMAL)
+    COMBO(cmd_n    , &kp RG(N)    ,       40 41            , COMBO_TERM_NORMAL)
+    COMBO(cmd_l    , &kp RG(L)    , 29             43      , COMBO_TERM_NORMAL)
+    COMBO(equal    , &kp EQUAL    ,    30             44   , COMBO_TERM_NORMAL)
+    COMBO(semicolon, &kp SEMICOLON,             42       62, COMBO_TERM_NORMAL)
 };
 
 macros {
