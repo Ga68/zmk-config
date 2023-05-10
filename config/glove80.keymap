@@ -106,11 +106,9 @@
 #define COMBO_TERM_SHORT  12
 #define COMBO_TERM_LONG   51
 
-#define AUTO_SHIFT_NORMAL    150
-#define AUTO_SHIFT_SHORT     100
-#define AUTO_SHIFT_LONG      200
-
-#define HT_TAPPING_TERM_MS 230
+#define HT_NORMAL 180
+#define HT_LONG 250
+#define HT_SHORT 130
 
 #define MEH(key) LA(LC(LS(key)))
 #define MEH_KEY  LA(LC(LEFT_SHIFT))
@@ -148,17 +146,6 @@
         timeout-ms = <MS>; \
     };
 
-#define AUTO_SHIFT(CODE, LABEL, MS) \
-    CODE: AUTO_SHIFT_##LABEL { \
-        compatible = "zmk,behavior-hold-tap"; \
-        label = "AUTO_SHIFT_##LABEL"; \
-        #binding-cells = <2>; \
-        tapping_term_ms = <MS>; \
-        quick_tap_ms = <0>; \
-        flavor = "tap-preferred"; \
-        bindings = <&kp>, <&kp>; \
-    };
-
 #define MACRO_WAIT_TAP_MS 30
 #define ZMAC(name,...) \
     name: name { \
@@ -170,12 +157,12 @@
             bindings = __VA_ARGS__ ; \
         };
 
-#define HT(code, name,...) \
+#define HT(code, name, tap_ms,...) \
     code: name { \
         compatible = "zmk,behavior-hold-tap"; \
         label = ZMK_MACRO_STRINGIFY(ZM_ ## name); \
         #binding-cells = <2>; \
-        tapping-term-ms = <HT_TAPPING_TERM_MS>; \
+        tapping-term-ms = <tap_ms>; \
         quick-tap-ms = <0>; \
         flavor = "balanced"; \
         bindings = __VA_ARGS__ ; \
@@ -244,17 +231,16 @@ macros {
 };
 
 behaviors {
-    AUTO_SHIFT(as      , normal, AUTO_SHIFT_NORMAL   )
-    AUTO_SHIFT(as_long , long  , AUTO_SHIFT_LONG     )
-    AUTO_SHIFT(as_short, short , AUTO_SHIFT_SHORT    )
-
-    HT(hrm            , homerow_mods            , <&kp &kp>          )
-    HT(bd_ht          , billion_dollar_hold_tap , <&b_dollars &kp>   )
-    HT(md_ht          , million_dollar_hold_tap , <&m_dollars &kp>   )
-    HT(kd_ht          , thousand_dollar_hold_tap, <&k_dollars &kp>   )
-    HT(triple_grave_ht, triple_grave_hold_tap   , <&triple_grave &kp>)
-    HT(ellipses_ht    , ellipses_hold_tap       , <&ellipses &kp>    )
-    HT(bspc_del_lt    , bspc_del_layer_tap      , <&mo &bspc_del>    )
+    HT(as             , auto_shift              , HT_NORMAL, <&kp &kp>          )
+    HT(as_long        , auto_shift_long         , HT_LONG  , <&kp &kp>          )
+    HT(as_short       , auto_shift_short        , HT_SHORT , <&kp &kp>          )
+    HT(hrm            , homerow_mods            , HT_NORMAL, <&kp &kp>          )
+    HT(bd_ht          , billion_dollar_hold_tap , HT_NORMAL, <&b_dollars &kp>   )
+    HT(md_ht          , million_dollar_hold_tap , HT_NORMAL, <&m_dollars &kp>   )
+    HT(kd_ht          , thousand_dollar_hold_tap, HT_NORMAL, <&k_dollars &kp>   )
+    HT(triple_grave_ht, triple_grave_hold_tap   , HT_NORMAL, <&triple_grave &kp>)
+    HT(ellipses_ht    , ellipses_hold_tap       , HT_NORMAL, <&ellipses &kp>    )
+    HT(bspc_del_lt    , bspc_del_layer_tap      , HT_NORMAL, <&mo &bspc_del>    )
 
     bspc_del: backspace_delete {
         compatible = "zmk,behavior-mod-morph";
